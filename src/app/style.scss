@@ -1,0 +1,88 @@
+body {
+  font-family: 'Segoe UI', 'Roboto', arial, sans-serif;
+}
+
+.App {
+  padding: .5em;
+}
+
+.SearchCodebase {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.overlay {
+  background-color: white;
+  border: 2px solid green;
+  padding: 1em;
+
+  &:hover .command-panel {
+    opacity: 1
+  }
+
+  .command-panel {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transition: opacity .5s ease;
+    background-color: #0008;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity .5s ease;
+  }
+  
+  .command {
+    color: white;
+    font-size: larger;
+
+    &:not(:first-child) {
+      margin-left: 0.5em;
+    }
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.edge-popup {
+  background-color: black;
+  color: white;
+  padding: 0.5em;
+}
+
+.hover-popup {
+  svg {
+    margin: auto;
+    display: block;
+
+    &:hover {
+      color: gray;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: .3em;
+    }
+  }
+  
+	background-color: transparent;
+	animation-name: slide-animation;
+	animation-duration: .3s;
+	font-size: 1em;
+}
+
+@keyframes slide-animation {
+	from {
+		opacity: 0;
+		margin-left: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

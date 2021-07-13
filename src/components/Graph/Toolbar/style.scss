@@ -1,0 +1,31 @@
+.Toolbar {
+  padding: .5em;
+  display: flex;
+  position: relative;
+  background-color: #ecd9a3;
+  justify-content: space-between;
+
+  &__SearchNetwork {
+    box-sizing: border-box;
+  }
+
+  &__Tool {
+    color: #174922;
+    margin-left: 1em;
+    cursor: pointer;
+
+    &:hover {
+      color: #297c3b;
+    }
+  }
+
+  &__Legend {
+    position: absolute;
+    margin: 0.3em;
+    right: 0;
+    top: 2em;
+    box-shadow: 0 0 7px 0px #7777;
+    width: 10em;
+    z-index: 1;
+  }
+}

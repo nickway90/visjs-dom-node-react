@@ -1,0 +1,25 @@
+.Network {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+
+  .vis-network {
+    height: 100% !important;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__overlay-dom {
+    position: absolute;
+  }
+
+  &__popup-edge-click {
+    position: absolute;
+  }
+
+  &__popup-node-hover {
+    position: absolute;
+  }
+}

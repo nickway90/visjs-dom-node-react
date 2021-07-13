@@ -1,0 +1,57 @@
+.Graph {
+  &__Content {
+    position: relative;
+    border: 1px solid lightgray;
+  }
+
+  &__Network {
+    position: absolute;
+    width: 100%;
+  }
+
+  &__BasicInfo {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: small;
+    margin-top: 0.5em;
+
+    div {
+      margin-right: 2em;
+    }
+  }
+
+  &__Tree {
+    overflow: auto;
+    position: absolute;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__Tree-icon {
+    width: 0.8em;
+    height: 0.8em;
+    display: block;
+    box-shadow: 1px 2px 3px 0px #0005;
+    border-radius: 50%;
+  }
+
+  .rc-tree .rc-tree-treenode .rc-tree-node-content-wrapper {
+    height: inherit;
+  }
+
+  .rc-tree-node-selected {
+    border: none;
+    background-color: #bbb;
+  }
+
+  .rc-tree-node-content-wrapper {
+    padding: 0 0.2em !important;
+    margin: 0 -0.2em !important;
+    border-radius: 3px;
+  }
+  
+  .rc-tree-node-content-wrapper:hover {
+    background-color: #eee;
+  }
+}
