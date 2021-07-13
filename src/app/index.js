@@ -161,7 +161,7 @@ function App() {
               icon={expand ? faAngleDoubleRight : faAngleDoubleLeft}
               title='Open/Close the Direct Children'
               size="lg"
-              onDoubleClick={handleHideClick(e.node)}
+              // onDoubleClick={handleHideClick(e.node)}
             />
           )}
         </div>
