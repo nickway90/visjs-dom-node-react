@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faEye, faEyeSlash, faArrowRight, faArrowLeft, faAngleRight, faAngleLeft, faAngleDoubleRight, faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faEye, faEyeSlash, faAngleRight, faAngleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
 import fp from 'lodash/fp'
 import xor from 'lodash/xor'
 import Graph, { iterateFrom, csvExport, dumpEdge, styles } from 'components/Graph'
@@ -40,16 +40,16 @@ const visOptions = {
   width: '100%',
   autoResize: true,
   groups: {
-    PROG: { mass: 1, shape: 'dot', color: 'red' },
-    FUNC: { mass: 1, shape: 'dot', color: '#f5ab70' },
-    METH: { mass: 1, shape: 'dot', color: '#059494' },
-    DTEL: { mass: 2, shape: 'dot', color: '#059494' },
-    STRU: { mass: 2, shape: 'dot', color: '#00b8ff' },
-    TYPE: { mass: 2, shape: 'dot', color: 'darkslateblue' },
-    TTYP: { mass: 2, shape: 'dot', color: 'coral' },
-    TABL: { mass: 1, shape: 'dot', color: 'white' },
-    TRAN: { mass: 5, shape: 'box', color: 'grey', font: { color:'white' } },
-    VIEW: { mass: 1, shape: 'dot', color: 'yellow' }
+    PROG: { mass: 1, shape: 'dot', color: 'red', x: 0, y: -100 },
+    FUNC: { mass: 1, shape: 'dot', color: '#f5ab70', x: 0, y: 100 },
+    METH: { mass: 1, shape: 'dot', color: '#059494', x: 0, y: 100 },
+    DTEL: { mass: 2, shape: 'dot', color: '#059494', x: 0, y: 100 },
+    STRU: { mass: 2, shape: 'dot', color: '#00b8ff', x: 0, y: 100 },
+    TYPE: { mass: 2, shape: 'dot', color: 'darkslateblue', x: 0, y: 100 },
+    TTYP: { mass: 2, shape: 'dot', color: 'coral', x: 0, y: 100 },
+    TABL: { mass: 1, shape: 'dot', color: 'white', x: -100, y: -100 },
+    TRAN: { mass: 5, shape: 'box', color: 'grey', font: { color:'white' }, x: 100, y: -100 },
+    VIEW: { mass: 1, shape: 'dot', color: 'yellow',x: 0, y: 100 }
   },
   ...vo
 }
@@ -81,7 +81,28 @@ function App() {
 
   const search = q => {
     queryGraph(driver, 'zresource').then(({ nodes, edges }) => {
-      const update = nodes.map((node, ind) => ind !== 0 ? { ...node, hidden: true } : node)
+      const update = nodes.map((node, ind) => 
+        ind !== 0 ? 
+        { ...node, hidden: true, x: visOptions.groups[node.group].x, y: visOptions.groups[node.group].y} : 
+        {
+          ...node, 
+          borderWidth: 5, 
+          color: {
+            background:'#4CAF50', 
+            hover:'#3e8e41', 
+            border: "green", 
+            highlight: {
+              border: '#3e8e41', 
+              background: 'green'
+            }
+          },
+          fixed: {
+            x: true,
+            y: true
+          },
+          group:undefined
+        }
+      )
       setNodes(update)
       setEdges(edges)
     })
@@ -158,7 +179,7 @@ function App() {
 
           {!!outgoings.length && (
             <FontAwesomeIcon
-              icon={expand ? faAngleDoubleRight : faAngleDoubleLeft}
+              icon={ faAngleDoubleRight }
               title='Open/Close the Direct Children'
               size="lg"
               // onDoubleClick={handleHideClick(e.node)}
@@ -206,8 +227,8 @@ function App() {
         return
       }
       const node = networkRef.current.body.nodes[e.nodes[0]]
-      node.options.fixed.y = false
-      node.options.fixed.x = false
+      node.options.fixed.y = true
+      node.options.fixed.x = true
     },
     dragEnd: e => {
       if (!e.nodes.length) {
