@@ -40,16 +40,16 @@ const visOptions = {
   width: '100%',
   autoResize: true,
   groups: {
-    PROG: { mass: 1, shape: 'dot', color: 'red', x: 0, y: -100 },
-    FUNC: { mass: 1, shape: 'dot', color: '#f5ab70', x: 0, y: 100 },
-    METH: { mass: 1, shape: 'dot', color: '#059494', x: 0, y: 100 },
-    DTEL: { mass: 2, shape: 'dot', color: '#059494', x: 0, y: 100 },
-    STRU: { mass: 2, shape: 'dot', color: '#00b8ff', x: 0, y: 100 },
-    TYPE: { mass: 2, shape: 'dot', color: 'darkslateblue', x: 0, y: 100 },
-    TTYP: { mass: 2, shape: 'dot', color: 'coral', x: 0, y: 100 },
-    TABL: { mass: 1, shape: 'dot', color: 'white', x: -100, y: -100 },
-    TRAN: { mass: 5, shape: 'box', color: 'grey', font: { color:'white' }, x: 100, y: -100 },
-    VIEW: { mass: 1, shape: 'dot', color: 'yellow',x: 0, y: 100 }
+    PROG: { mass: 1, shape: 'dot', color: 'red', x: 0, y: -1000 },
+    FUNC: { mass: 1, shape: 'dot', color: '#f5ab70', x: null, y: null },
+    METH: { mass: 1, shape: 'dot', color: '#059494', x: null, y: null },
+    DTEL: { mass: 2, shape: 'dot', color: '#059494', x: null, y: null },
+    STRU: { mass: 2, shape: 'dot', color: '#00b8ff', x: null, y: null },
+    TYPE: { mass: 2, shape: 'dot', color: 'darkslateblue', x: null, y: null },
+    TTYP: { mass: 2, shape: 'dot', color: 'coral', x: null, y: null },
+    TABL: { mass: 1, shape: 'dot', color: 'white', x: -10000, y: -10000 },
+    TRAN: { mass: 5, shape: 'box', color: 'grey', font: { color:'white' }, x: 1000, y: -1000 },
+    VIEW: { mass: 1, shape: 'dot', color: 'yellow',x: null, y: null }
   },
   ...vo
 }
@@ -83,10 +83,17 @@ function App() {
     queryGraph(driver, 'zresource').then(({ nodes, edges }) => {
       const update = nodes.map((node, ind) => 
         ind !== 0 ? 
-        { ...node, hidden: true, x: visOptions.groups[node.group].x, y: visOptions.groups[node.group].y} : 
+        { 
+          ...node, 
+          hidden: true, 
+          // x: visOptions.groups[node.group].x, 
+          // y: visOptions.groups[node.group].y
+        } 
+        : 
         {
           ...node, 
-          borderWidth: 5, 
+          borderWidth: 5,
+          size: 35,
           color: {
             background:'#4CAF50', 
             hover:'#3e8e41', 
@@ -227,8 +234,8 @@ function App() {
         return
       }
       const node = networkRef.current.body.nodes[e.nodes[0]]
-      node.options.fixed.y = true
-      node.options.fixed.x = true
+      node.options.fixed.y = false
+      node.options.fixed.x = false
     },
     dragEnd: e => {
       if (!e.nodes.length) {
