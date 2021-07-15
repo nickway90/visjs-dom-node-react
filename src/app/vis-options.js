@@ -43,7 +43,7 @@ export default {
     color: {
       color: 'rgba(0, 0, 255, 0.1)',
       hover: 'gray',
-      highlight: '#ecd9a3'
+      highlight: 'red'
     }
   },
    physics: {
