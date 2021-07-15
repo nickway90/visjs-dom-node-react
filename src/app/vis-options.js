@@ -41,6 +41,7 @@ export default {
     color: {
       color: 'rgba(0, 0, 255, 0.1)',
       hover: 'rgba(0, 0, 255, 0.2)',
+      highlight: '#ecd9a3'
     }
   },
    physics: {

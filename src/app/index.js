@@ -161,9 +161,9 @@ function App() {
   }
 
   const popups = {
-    popupOnEdgeClick: e => (
-      <div className='edge-popup'>{e.edges[0]}</div>
-    ),
+    // popupOnEdgeClick: e => (
+    //   <div className='edge-popup'>{e.edges[0]}</div>
+    // ),
     popupOnNodeHover: e => {
       const node = networkRef.current.body.nodes[e.node]
       const ids = node.edges.filter(({ from }) => from === node).map(edge => edge.to.id)
