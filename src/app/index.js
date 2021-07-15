@@ -236,6 +236,12 @@ function App() {
       const node = networkRef.current.body.nodes[e.nodes[0]]
       node.options.fixed.y = false
       node.options.fixed.x = false
+
+      e.edges.forEach(edge => {
+        console.log(edge)
+        networkRef.current.body.edges[edge].options.color.hover="blue"
+        networkRef.current.body.edges[edge].options.color.highlight="blue"
+      })
     },
     dragEnd: e => {
       if (!e.nodes.length) {
@@ -244,6 +250,12 @@ function App() {
       const node = networkRef.current.body.nodes[e.nodes[0]]
       node.options.fixed.y = true
       node.options.fixed.x = true
+
+      e.edges.forEach(edge => {
+        console.log(edge)
+        networkRef.current.body.edges[edge].options.color.hover="red"
+        networkRef.current.body.edges[edge].options.color.highlight="red"
+      })
     },
     stabilizationIterationsDone: () => {
       const network = networkRef.current
