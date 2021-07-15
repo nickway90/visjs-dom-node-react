@@ -81,7 +81,7 @@ function App() {
 
   const search = q => {
     queryGraph(driver, 'zresource').then(({ nodes, edges }) => {
-      const update = nodes.map((node, ind) => 
+      const nodesUpdate = nodes.map((node, ind) => 
         ind !== 0 ? 
         { 
           ...node, 
@@ -110,8 +110,19 @@ function App() {
           group:undefined
         }
       )
-      setNodes(update)
-      setEdges(edges)
+      setNodes(nodesUpdate)
+
+      const edgesUpdate = edges.map(edge => (
+        { 
+          ...edge, 
+          background: {
+            enabled: true,
+            color: "rgba(0,0,100,0.2)",
+            size: 2,
+          }
+        } 
+      ))
+      setEdges(edgesUpdate)
     })
   }
 
