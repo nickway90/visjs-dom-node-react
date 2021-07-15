@@ -38,6 +38,8 @@ export default {
     },
     smooth: true,
     width: 0.2,
+    hoverWidth: 0.2,
+    selectionWidth: 0.2,
     color: {
       color: 'rgba(0, 0, 255, 0.1)',
       hover: 'rgba(0, 0, 255, 0.2)',

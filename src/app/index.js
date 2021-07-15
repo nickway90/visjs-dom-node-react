@@ -111,18 +111,7 @@ function App() {
         }
       )
       setNodes(nodesUpdate)
-
-      const edgesUpdate = edges.map(edge => (
-        { 
-          ...edge, 
-          background: {
-            enabled: true,
-            color: "rgba(0,0,100,0.2)",
-            size: 2,
-          }
-        } 
-      ))
-      setEdges(edgesUpdate)
+      setEdges(edges)
     })
   }
 
