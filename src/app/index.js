@@ -238,7 +238,6 @@ function App() {
       node.options.fixed.x = false
 
       e.edges.forEach(edge => {
-        console.log(edge)
         networkRef.current.body.edges[edge].options.color.hover="blue"
         networkRef.current.body.edges[edge].options.color.highlight="blue"
       })
@@ -252,7 +251,6 @@ function App() {
       node.options.fixed.x = true
 
       e.edges.forEach(edge => {
-        console.log(edge)
         networkRef.current.body.edges[edge].options.color.hover="red"
         networkRef.current.body.edges[edge].options.color.highlight="red"
       })

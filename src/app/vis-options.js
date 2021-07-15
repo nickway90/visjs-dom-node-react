@@ -6,7 +6,7 @@ export default {
     hoverConnectedEdges: true
   },
   nodes: {
-    borderWidth: 3,
+    borderWidth: 0,
     shape: 'dot',
     color: 'rgba(200, 200, 200, 0.3)',
     font: {
