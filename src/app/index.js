@@ -86,13 +86,17 @@ function App() {
         { 
           ...node, 
           hidden: true,
-          color: node.group === 'PROG' ? 'red' : visOptions.groups[node.group].color
+          color: node.group === 'PROG' ? 'red' : visOptions.groups[node.group].color,
+          label: node.title ? `${node.label} \n ${node.title}` : node.label,
+          title: undefined
           // x: visOptions.groups[node.group].x, 
           // y: visOptions.groups[node.group].y
         } 
         : 
         {
-          ...node, 
+          ...node,
+          label: node.title ? `${node.label} \n ${node.title}` : node.label,
+          title: undefined,
           borderWidth: 5,
           size: 35,
           color: {
