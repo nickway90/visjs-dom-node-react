@@ -40,7 +40,7 @@ const visOptions = {
   width: '100%',
   autoResize: true,
   groups: {
-    PROG: { mass: 1, shape: 'dot', color: 'red', x: 0, y: -1000 },
+    PROG: { mass: 1, shape: 'dot', x: 0, y: -1000 },
     FUNC: { mass: 1, shape: 'dot', color: '#f5ab70', x: null, y: null },
     METH: { mass: 1, shape: 'dot', color: '#059494', x: null, y: null },
     DTEL: { mass: 2, shape: 'dot', color: '#059494', x: null, y: null },
@@ -85,7 +85,8 @@ function App() {
         ind !== 0 ? 
         { 
           ...node, 
-          hidden: true, 
+          hidden: true,
+          color: node.group === 'PROG' ? 'red' : visOptions.groups[node.group].color
           // x: visOptions.groups[node.group].x, 
           // y: visOptions.groups[node.group].y
         } 
@@ -106,8 +107,7 @@ function App() {
           fixed: {
             x: true,
             y: true
-          },
-          group:undefined
+          }
         }
       )
       setNodes(nodesUpdate)
