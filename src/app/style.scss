@@ -80,6 +80,12 @@ body {
     display: block;
 
     &:hover {
+      transition: all .3s ease;
+      cursor: pointer;
+      transform: scale(1.1);
+      font-size: 1.8em;
+      background-color: white;
+      opacity: 0.2;
       color: gray;
     }
 
