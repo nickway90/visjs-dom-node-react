@@ -41,15 +41,15 @@ const visOptions = {
   autoResize: true,
   groups: {
     PROG: { mass: 1, shape: 'dot', x: 0, y: -1000 },
-    FUNC: { mass: 1, shape: 'dot', color: '#f5ab70', x: null, y: null },
-    METH: { mass: 1, shape: 'dot', color: '#059494', x: null, y: null },
-    DTEL: { mass: 2, shape: 'dot', color: '#059494', x: null, y: null },
-    STRU: { mass: 2, shape: 'dot', color: '#00b8ff', x: null, y: null },
-    TYPE: { mass: 2, shape: 'dot', color: 'darkslateblue', x: null, y: null },
-    TTYP: { mass: 2, shape: 'dot', color: 'coral', x: null, y: null },
+    FUNC: { mass: 1, shape: 'dot', color: '#f5ab70' },
+    METH: { mass: 1, shape: 'dot', color: '#059494' },
+    DTEL: { mass: 2, shape: 'dot', color: '#059494' },
+    STRU: { mass: 2, shape: 'dot', color: '#00b8ff' },
+    TYPE: { mass: 2, shape: 'dot', color: 'darkslateblue' },
+    TTYP: { mass: 2, shape: 'dot', color: 'coral' },
     TABL: { mass: 1, shape: 'dot', color: 'white', x: -10000, y: -10000 },
     TRAN: { mass: 5, shape: 'box', color: 'grey', font: { color:'white' }, x: 1000, y: -1000 },
-    VIEW: { mass: 1, shape: 'dot', color: 'yellow',x: null, y: null }
+    VIEW: { mass: 1, shape: 'dot', color: 'yellow' }
   },
   ...vo
 }
@@ -88,9 +88,9 @@ function App() {
           hidden: true,
           color: node.group === 'PROG' ? 'red' : visOptions.groups[node.group].color,
           label: node.title ? `${node.label} \n ${node.title}` : node.label,
-          title: undefined
-          // x: visOptions.groups[node.group].x, 
-          // y: visOptions.groups[node.group].y
+          title: undefined,
+          // x: visOptions.groups[node.group].x ? visOptions.groups[node.group].x : undefined,
+          // y: visOptions.groups[node.group].y ? visOptions.groups[node.group].y : undefined
         } 
         : 
         {
@@ -119,6 +119,12 @@ function App() {
     })
   }
 
+  const handleFitWindow = () => {
+    setTimeout(() => {
+      networkRef.current && networkRef.current.fit({ animation: true })
+    }, 1000);
+  }
+
   const handleSaveClick = nodeId => () => {
     const dump = fp.compose(
       fp.map(dumpEdge),
@@ -140,6 +146,7 @@ function App() {
     const update = nodes.map(node => descendants.includes(node.id) ? { ...node, hidden } : node )
     allHideRef.current = xor(allHideRef.current, [nodeId])
     setNodes(update)
+    handleFitWindow()
   }
 
   const handleOpenDirect = (nodeId, expand) => () => {
@@ -151,6 +158,7 @@ function App() {
     )(networkRef.current)
     const update = nodes.map(node => descendants.includes(node.id) ? { ...node, hidden: !expand } : node )
     setNodes(update)
+    handleFitWindow()
   }
 
   const popups = {
@@ -276,7 +284,9 @@ function App() {
           }
         }
       });
-      network.fit();
+      setTimeout(() => {
+        network.fit({ animation: true });
+      }, 10);
     }
   }
 
