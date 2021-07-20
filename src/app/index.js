@@ -88,7 +88,6 @@ function App() {
           ...node, 
           hidden: true,
           color: node.group === 'PROG' ? 'red' : visOptions.groups[node.group].color,
-          label: node.title ? `${node.label} \n ${node.title}` : node.label,
           title: undefined,
           tooltip: {
             label: node.label ? node.label : '',
@@ -100,7 +99,6 @@ function App() {
         : 
         {
           ...node,
-          label: node.title ? `${node.label} \n ${node.title}` : node.label,
           title: undefined,
           tooltip: {
             label: node.label ? node.label : '',
