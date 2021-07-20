@@ -90,17 +90,21 @@ function App() {
           color: node.group === 'PROG' ? 'red' : visOptions.groups[node.group].color,
           label: node.title ? `${node.label} \n ${node.title}` : node.label,
           title: undefined,
+          tooltip: {
+            label: node.label ? node.label : '',
+            description: node.title ? node.title : ''
+          },
           // x: visOptions.groups[node.group].x ? visOptions.groups[node.group].x : undefined,
           // y: visOptions.groups[node.group].y ? visOptions.groups[node.group].y : undefined
         } 
         : 
         {
           ...node,
-          label: undefined,
+          label: node.title ? `${node.label} \n ${node.title}` : node.label,
           title: undefined,
           tooltip: {
-            label: node.label,
-            description: node.title
+            label: node.label ? node.label : '',
+            description: node.title ? node.title : ''
           },
           borderWidth: 5,
           size: 35,
@@ -175,9 +179,9 @@ function App() {
   }
 
   const popups = {
-    popupOnEdgeClick: e => (
-      <div className='edge-popup'>{e.edges[0]}</div>
-    ),
+    // popupOnEdgeClick: e => (
+    //   <div className='edge-popup'>{e.edges[0]}</div>
+    // ),
     popupOnNodeHover: e => {
       const node = networkRef.current.body.nodes[e.node]
       const ids = node.edges.filter(({ from }) => from === node).map(edge => edge.to.id)
