@@ -100,6 +100,16 @@ body {
 	font-size: 1em;
 }
 
+.react-tooltip-lite {
+  background: #333;
+  color: white;
+  white-space: pre-line;
+}
+
+.react-tooltip-lite-arrow {
+  border-color: #333;
+}
+
 @keyframes slide-animation {
 	from {
 		opacity: 0;

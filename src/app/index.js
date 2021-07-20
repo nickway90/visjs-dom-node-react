@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faEye, faEyeSlash, faAngleRight, faAngleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faEye, faEyeSlash, faAngleRight, faAngleLeft, faAngleDoubleRight, faInfo } from '@fortawesome/free-solid-svg-icons'
 import fp from 'lodash/fp'
 import xor from 'lodash/xor'
 import Graph, { iterateFrom, csvExport, dumpEdge, styles } from 'components/Graph'
@@ -9,6 +9,7 @@ import neo4j from 'neo4j-driver'
 import mockDriver from './mock-driver'
 import queryGraph from 'neo4j'
 import './style.scss'
+import Tooltip from 'react-tooltip-lite';
 
 // const driver = neo4j
 const driver = mockDriver
@@ -95,8 +96,12 @@ function App() {
         : 
         {
           ...node,
-          label: node.title ? `${node.label} \n ${node.title}` : node.label,
+          label: undefined,
           title: undefined,
+          tooltip: {
+            label: node.label,
+            description: node.title
+          },
           borderWidth: 5,
           size: 35,
           color: {
@@ -108,10 +113,18 @@ function App() {
               background: 'green'
             }
           },
-          fixed: {
-            x: true,
-            y: true
-          }
+          // x:0,
+          // y:0,
+          physics: false,
+          interaction: {
+            dragNodes: false,// do not allow dragging nodes
+            zoomView: false, // do not allow zooming
+            dragView: false  // do not allow dragging
+          },
+          // fixed: {
+          //   x: true,
+          //   y: true
+          // }
         }
       )
       setNodes(nodesUpdate)
@@ -162,9 +175,9 @@ function App() {
   }
 
   const popups = {
-    // popupOnEdgeClick: e => (
-    //   <div className='edge-popup'>{e.edges[0]}</div>
-    // ),
+    popupOnEdgeClick: e => (
+      <div className='edge-popup'>{e.edges[0]}</div>
+    ),
     popupOnNodeHover: e => {
       const node = networkRef.current.body.nodes[e.node]
       const ids = node.edges.filter(({ from }) => from === node).map(edge => edge.to.id)
@@ -172,6 +185,11 @@ function App() {
       const expand = outgoings.every(node => node.hidden)
       const hide = allHideRef.current.includes(e.node)
 
+      let tooltip_content = ''
+      for(const [key, value] of Object.entries(node.options.tooltip)) {
+        tooltip_content += `${key}: ${value} \n`
+      }
+      
       return (
         <div className='hover-popup' style={{marginLeft: `${node.shape.width / 2 + 20}px`}}>
           <FontAwesomeIcon
@@ -204,6 +222,22 @@ function App() {
               // onDoubleClick={handleHideClick(e.node)}
             />
           )}
+
+          <Tooltip 
+            content={tooltip_content}
+            className="target"
+            tipContentClassName=""
+            tagName="p"
+            eventOn="onClick"
+            eventOff="onMouseOut"
+            useHover={false}
+          >
+            <FontAwesomeIcon
+              icon={ faInfo }
+              title='Info'
+              size="lg"
+            />
+          </Tooltip>
         </div>
       )
     }
