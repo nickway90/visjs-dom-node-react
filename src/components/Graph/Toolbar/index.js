@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStop, faSave, faWrench, faSitemap, faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
+import { faStop, faEye, faSave, faWrench, faSitemap, faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
 import Legend from '../Legend'
 import './style.scss'
 
-export default ({ groups, hiddenGroups, extendLegend, onToggleGroup, onFitWindow, onSaveClick, onSearch, onToggleView }) => {
+export default ({ groups, hiddenGroups, extendLegend, onToggleGroup, onFitWindow, onSaveClick, onSearch, onToggleView, allHideRef, handleShowNode }) => {
   const [showLegend, setShowLegend] = useState(false)
   const [view, setView] = useState(true)
   const legendRef = useRef();
@@ -44,6 +44,13 @@ export default ({ groups, hiddenGroups, extendLegend, onToggleGroup, onFitWindow
         onKeyUp={handleSearchChange}
       />
       <div>
+        <span
+          title='Hide/Unhide'
+          className='Toolbar__Tool'
+          onClick={handleShowNode}
+        >
+          <FontAwesomeIcon icon={faEye} color={allHideRef.current.length > 0 ? 'red' : 'black'} />
+        </span>
         <span
           title='Graph/Tree view'
           className='Toolbar__Tool'

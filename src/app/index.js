@@ -58,6 +58,7 @@ const visOptions = {
 function App() {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+  const [rootNodeId, setRootNodeId] = useState(null)
   const networkRef = useRef()
   const searchRef = useRef()
   const allHideRef = useRef([])
@@ -115,20 +116,16 @@ function App() {
               background: 'green'
             }
           },
-          // x:0,
-          // y:0,
-          physics: false,
-          interaction: {
-            dragNodes: false,// do not allow dragging nodes
-            zoomView: false, // do not allow zooming
-            dragView: false  // do not allow dragging
-          },
+          // x:110,
+          // y:10,
           // fixed: {
           //   x: true,
           //   y: true
           // }
         }
       )
+      allHideRef.current = [nodes[0].id]
+      setRootNodeId(nodes[0].id)
       setNodes(nodesUpdate)
       setEdges(edges)
     })
@@ -157,7 +154,7 @@ function App() {
       fpIterateFrom({ self: false }),
       fp.get(`body.nodes[${nodeId}]`)
     )(networkRef.current)
-    const hidden = allHideRef.current.includes(nodeId)
+    const hidden = !allHideRef.current.includes(nodeId)
     const update = nodes.map(node => descendants.includes(node.id) ? { ...node, hidden } : node )
     allHideRef.current = xor(allHideRef.current, [nodeId])
     setNodes(update)
@@ -201,7 +198,7 @@ function App() {
             size="lg"
           />
           <FontAwesomeIcon
-            icon={!hide ? faEye :faEyeSlash}
+            icon={hide ? faEye :faEyeSlash}
             title='Hide/Unhide Descendants'
             onClick={handleHideClick(e.node)}
             size="lg"
@@ -346,6 +343,8 @@ function App() {
           popups={popups}
           options={options}
           getNetwork={getNetwork}
+          handleShowNode={handleHideClick(rootNodeId)}
+          allHideRef={allHideRef}
         />
       )}
     </div>

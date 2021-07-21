@@ -9,7 +9,7 @@ import './style.scss'
 import 'rc-tree/assets/index.css'
 
 export default props => {
-  const { nodes, edges, events, popups, visOptions, className, options } = props
+  const { nodes, edges, events, popups, visOptions, className, options, allHideRef, handleShowNode } = props
   
   const [hiddenGroups, setHiddenGroups] = useState([])
   const [hoverInfo, setHoverInfo] = useState(null)
@@ -243,6 +243,8 @@ export default props => {
           onSaveClick={handleSaveClick}
           onSearch={handleSearchChange}
           onToggleView={setView}
+          allHideRef={allHideRef}
+          handleShowNode={handleShowNode}
         />
       )}
       <div className='Graph__Content' style={{height: options.height}}>
