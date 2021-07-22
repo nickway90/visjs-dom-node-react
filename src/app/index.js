@@ -46,11 +46,11 @@ const visOptions = {
     METH: { mass: 1, shape: 'dot', color: '#059494' },
     DTEL: { mass: 2, shape: 'dot', color: '#059494' },
     STRU: { mass: 2, shape: 'dot', color: '#00b8ff' },
-    TYPE: { mass: 2, shape: 'dot', color: 'darkslateblue' },
-    TTYP: { mass: 2, shape: 'dot', color: 'coral' },
-    TABL: { mass: 1, shape: 'dot', color: 'white', x: -10000, y: -10000 },
-    TRAN: { mass: 5, shape: 'box', color: 'grey', font: { color:'white' }, x: 1000, y: -1000 },
-    VIEW: { mass: 1, shape: 'dot', color: 'yellow' }
+    TYPE: { mass: 2, shape: 'dot', color: '#483d8b' },
+    TTYP: { mass: 2, shape: 'dot', color: '#ff7f50' },
+    TABL: { mass: 1, shape: 'dot', color: '#ffffff', x: -10000, y: -10000 },
+    TRAN: { mass: 5, shape: 'box', color: '#808080', font: { color:'white' }, x: 1000, y: -1000 },
+    VIEW: { mass: 1, shape: 'dot', color: '#ffff00' }
   },
   ...vo
 }
@@ -88,7 +88,7 @@ function App() {
         { 
           ...node, 
           hidden: true,
-          color: node.group === 'PROG' ? 'red' : visOptions.groups[node.group].color,
+          color: node.group === 'PROG' ? '#ff0000' : visOptions.groups[node.group].color,
           title: undefined,
           tooltip: {
             label: node.label ? node.label : '',
@@ -110,10 +110,10 @@ function App() {
           color: {
             background:'#4CAF50', 
             hover:'#3e8e41', 
-            border: "green", 
+            border: "#008000", 
             highlight: {
               border: '#3e8e41', 
-              background: 'green'
+              background: '#008000'
             }
           },
           // x:110,
@@ -298,6 +298,31 @@ function App() {
       e.edges.forEach(edge => {
         networkRef.current.body.edges[edge].options.color.hover="red"
         networkRef.current.body.edges[edge].options.color.highlight="red"
+      })
+    },
+    selectNode: e => {
+      const node = networkRef.current.body.nodes[e.nodes[0]]
+      console.log(node)
+      node.options.borderWidth = 0
+    },
+    hoverNode: e => {
+      const descendants = fp.compose(
+        fp.map(node => node.id),
+        fp.get('nodes'),
+        fpIterateFrom({ self: true }),
+        fp.get(`body.nodes[${e.node}]`)
+      )(networkRef.current)
+      const update = nodes.map(node => descendants.includes(node.id) ? node : { ...node, opacity: 0.1 } )
+      setNodes(update)
+    },
+    blurNode: e => {
+      setNodes(nodes => {
+        return nodes.map(node =>{
+          return {
+            ...node,
+            opacity: 1
+          }
+        })
       })
     },
     stabilizationIterationsDone: () => {

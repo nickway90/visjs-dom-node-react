@@ -7,6 +7,7 @@ export default {
   },
   nodes: {
     borderWidth: 0,
+    borderWidthSelected: 0,
     shape: 'dot',
     color: 'rgba(200, 200, 200, 0.3)',
     font: {
@@ -42,8 +43,8 @@ export default {
     selectionWidth: 0.2,
     color: {
       color: 'rgba(0, 0, 255, 0.1)',
-      hover: 'red',
-      highlight: 'red'
+      hover: '#ff0000',
+      highlight: '#ff0000'
     }
   },
    physics: {
