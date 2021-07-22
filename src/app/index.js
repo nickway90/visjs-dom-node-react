@@ -119,8 +119,8 @@ function App() {
           // x:110,
           // y:10,
           // fixed: {
-          //   x: true,
-          //   y: true
+          //   x: false,
+          //   y: false
           // }
         }
       )
@@ -278,9 +278,16 @@ function App() {
       if (!e.nodes.length) {
         return
       }
+
       const node = networkRef.current.body.nodes[e.nodes[0]]
-      node.options.fixed.y = false
-      node.options.fixed.x = false
+      if (e.nodes[0] === rootNodeId) {
+        node.options.fixed.y = true
+        node.options.fixed.x = true
+      } else {
+        node.options.fixed.y = false
+        node.options.fixed.x = false
+      }
+      
 
       e.edges.forEach(edge => {
         networkRef.current.body.edges[edge].options.color.hover="blue"
