@@ -47,7 +47,7 @@ export default ({ groups, hiddenGroups, extendLegend, onToggleGroup, onFitWindow
         <span
           title='Hide/Unhide'
           className='Toolbar__Tool'
-          onClick={handleShowNode}
+          onClick={handleShowNode(allHideRef.current[0])}
         >
           <FontAwesomeIcon icon={faEye} color={allHideRef.current.length > 0 ? 'red' : 'black'} />
         </span>

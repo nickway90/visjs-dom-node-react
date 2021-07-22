@@ -109,17 +109,17 @@ function Network(props) {
         dom[id].style.transform = `translate(-50%, -50%) scale(${scale})`
       }
 
-      if (hoverNodeRef.current === id) {
-        const popupOnNodeHover = popupOnNodeHoverRef.current
-        const { x, y } = network.canvasToDOM({
-          x: pos[id].x,
-          y: pos[id].y
-        })
+      // if (hoverNodeRef.current === id) {
+      //   const popupOnNodeHover = popupOnNodeHoverRef.current
+      //   const { x, y } = network.canvasToDOM({
+      //     x: pos[id].x,
+      //     y: pos[id].y
+      //   })
 
-        popupOnNodeHover.style.left = `${x}px`
-        popupOnNodeHover.style.top = `${y}px`
-        popupOnNodeHover.style.transform = `translate(-50%, -50%) scale(${scale}) translateX(50%)`
-      }
+      //   popupOnNodeHover.style.left = `${x}px`
+      //   popupOnNodeHover.style.top = `${y}px`
+      //   popupOnNodeHover.style.transform = `translate(-50%, -50%) scale(${scale}) translateX(50%)`
+      // }
     })
     props.events && props.events.afterDrawing && props.events.afterDrawing(e)
   }

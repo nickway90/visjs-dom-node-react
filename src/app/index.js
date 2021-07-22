@@ -41,15 +41,15 @@ const visOptions = {
   width: '100%',
   autoResize: true,
   groups: {
-    PROG: { mass: 1, shape: 'dot', x: 0, y: -1000 },
+    PROG: { mass: 1, shape: 'dot', wind: { x: 0, y: -1000 } },
     FUNC: { mass: 1, shape: 'dot', color: '#f5ab70' },
     METH: { mass: 1, shape: 'dot', color: '#059494' },
     DTEL: { mass: 2, shape: 'dot', color: '#059494' },
     STRU: { mass: 2, shape: 'dot', color: '#00b8ff' },
     TYPE: { mass: 2, shape: 'dot', color: '#483d8b' },
     TTYP: { mass: 2, shape: 'dot', color: '#ff7f50' },
-    TABL: { mass: 1, shape: 'dot', color: '#ffffff', x: -10000, y: -10000 },
-    TRAN: { mass: 5, shape: 'box', color: '#808080', font: { color:'white' }, x: 1000, y: -1000 },
+    TABL: { mass: 1, shape: 'dot', color: '#ffffff', wind: { x: -1000, y: -1000 } },
+    TRAN: { mass: 5, shape: 'box', color: '#808080', font: { color:'white' }, wind: { x: 1000, y: -1000 } },
     VIEW: { mass: 1, shape: 'dot', color: '#ffff00' }
   },
   ...vo
@@ -116,12 +116,10 @@ function App() {
               background: '#008000'
             }
           },
-          // x:110,
-          // y:10,
-          // fixed: {
-          //   x: false,
-          //   y: false
-          // }
+          fixed: {
+            x: true,
+            y: true
+          }
         }
       )
       allHideRef.current = [nodes[0].id]
@@ -151,7 +149,7 @@ function App() {
     const descendants = fp.compose(
       fp.map(node => node.id),
       fp.get('nodes'),
-      fpIterateFrom({ self: false }),
+      fpIterateFrom({ self: nodeId === rootNodeId ? false : true }),
       fp.get(`body.nodes[${nodeId}]`)
     )(networkRef.current)
     const hidden = !allHideRef.current.includes(nodeId)
@@ -309,7 +307,7 @@ function App() {
     },
     selectNode: e => {
       const node = networkRef.current.body.nodes[e.nodes[0]]
-      console.log(node)
+      console.log(allHideRef)
       node.options.borderWidth = 0
     },
     hoverNode: e => {
@@ -375,7 +373,7 @@ function App() {
           popups={popups}
           options={options}
           getNetwork={getNetwork}
-          handleShowNode={handleHideClick(rootNodeId)}
+          handleShowNode={handleHideClick}
           allHideRef={allHideRef}
         />
       )}
