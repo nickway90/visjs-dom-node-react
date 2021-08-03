@@ -75,17 +75,23 @@ body {
 }
 
 .hover-popup {
+
+  &:hover {
+    background-color: #ffffff;
+    
+    svg {
+      transition: all .3s ease;
+      cursor: pointer;
+      transform: scale(1.3);
+      font-size: 1.8em;
+    }
+  }
+
   svg {
     margin: auto;
     display: block;
 
     &:hover {
-      transition: all .3s ease;
-      cursor: pointer;
-      transform: scale(1.1);
-      font-size: 1.8em;
-      background-color: white;
-      opacity: 0.2;
       color: gray;
     }
 
