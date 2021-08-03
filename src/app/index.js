@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faEye, faEyeSlash, faAngleRight, faAngleLeft, faAngleDoubleRight, faInfo } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faEye, faEyeSlash, faAngleRight, faAngleLeft, faInfo, faSearch } from '@fortawesome/free-solid-svg-icons'
 import fp from 'lodash/fp'
 import xor from 'lodash/xor'
 import Graph, { iterateFrom, csvExport, dumpEdge, styles } from 'components/Graph'
@@ -195,12 +195,14 @@ function App() {
             onClick={handleSaveClick(e.node)}
             size="lg"
           />
-          <FontAwesomeIcon
-            icon={hide ? faEye :faEyeSlash}
-            title='Hide/Unhide Descendants'
-            onClick={handleHideClick(e.node)}
-            size="lg"
-          />
+          {!!outgoings.length && (
+            <FontAwesomeIcon
+              icon={!hide ? faEye :faEyeSlash}
+              title='Hide/Unhide Descendants'
+              onClick={handleHideClick(e.node)}
+              size="lg"
+            />
+          )}
 
           {!!outgoings.length && (
             <FontAwesomeIcon
@@ -213,7 +215,7 @@ function App() {
 
           {!!outgoings.length && (
             <FontAwesomeIcon
-              icon={ faAngleDoubleRight }
+              icon={ faSearch }
               title='Open/Close the Direct Children'
               size="lg"
               // onDoubleClick={handleHideClick(e.node)}

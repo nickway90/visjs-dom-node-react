@@ -75,10 +75,14 @@ body {
 }
 
 .hover-popup {
+  padding: 10px;
+  box-shadow: 1px 1px 15px 0px #9e9e9ed4;
+  border-radius: 5px;
+  background-color: #ffffff78;
 
   &:hover {
     background-color: #ffffff;
-    
+
     svg {
       transition: all .3s ease;
       cursor: pointer;
