@@ -41,7 +41,7 @@ const visOptions = {
     PROG: { mass: 1, shape: 'dot'},
     FUNC: { mass: 1, shape: 'dot', color: '#f5ab70' },
     METH: { mass: 1, shape: 'dot', color: '#059494' },
-    DTEL: { mass: 2, shape: 'dot', color: '#059494' },
+    DTEL: { mass: 2, shape: 'dot', color: '#059494', physics: {enabled: true, wind: {x: -1000, y: 1000}} },
     STRU: { mass: 2, shape: 'dot', color: '#00b8ff' },
     TYPE: { mass: 2, shape: 'dot', color: '#483d8b' },
     TTYP: { mass: 2, shape: 'dot', color: '#ff7f50' },
@@ -189,14 +189,14 @@ function App() {
             onClick={handleSaveClick(e.node)}
             size="lg"
           />
-          {!!outgoings.length && (
+          {/* {!!outgoings.length && (
             <FontAwesomeIcon
               icon={!hide ? faEye :faEyeSlash}
               title='Hide/Unhide Descendants'
               onClick={handleHideClick(e.node)}
               size="lg"
             />
-          )}
+          )} */}
 
           {!!outgoings.length && (
             <FontAwesomeIcon
