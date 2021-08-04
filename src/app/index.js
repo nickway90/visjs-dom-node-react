@@ -37,19 +37,16 @@ const fpIterateFrom = opt => node => iterateFrom(node, opt)
 // ]
 
 const visOptions = {
-  height: '100%',
-  width: '100%',
-  autoResize: true,
   groups: {
-    PROG: { mass: 1, shape: 'dot', wind: { x: 0, y: -1000 } },
+    PROG: { mass: 1, shape: 'dot'},
     FUNC: { mass: 1, shape: 'dot', color: '#f5ab70' },
     METH: { mass: 1, shape: 'dot', color: '#059494' },
     DTEL: { mass: 2, shape: 'dot', color: '#059494' },
     STRU: { mass: 2, shape: 'dot', color: '#00b8ff' },
     TYPE: { mass: 2, shape: 'dot', color: '#483d8b' },
     TTYP: { mass: 2, shape: 'dot', color: '#ff7f50' },
-    TABL: { mass: 1, shape: 'dot', color: '#ffffff', wind: { x: -1000, y: -1000 } },
-    TRAN: { mass: 5, shape: 'box', color: '#808080', font: { color:'white' }, wind: { x: 1000, y: -1000 } },
+    TABL: { mass: 1, shape: 'dot', color: '#ffffff', physics: {enabled: true, wind: {x: -1000, y: -1000}} },
+    TRAN: { mass: 5, shape: 'box', color: '#808080', font: { color:'white' }, physics: {enabled: true, wind: {x: 1000, y: -1000}} },
     VIEW: { mass: 1, shape: 'dot', color: '#ffff00' }
   },
   ...vo
@@ -94,8 +91,7 @@ function App() {
             label: node.label ? node.label : '',
             description: node.title ? node.title : ''
           },
-          // x: visOptions.groups[node.group].x ? visOptions.groups[node.group].x : undefined,
-          // y: visOptions.groups[node.group].y ? visOptions.groups[node.group].y : undefined
+          physics: node.group === 'PROG' ? {enabled: true, wind: {x: 0, y: -1000}} : node.physics
         } 
         : 
         {
@@ -116,10 +112,7 @@ function App() {
               background: '#008000'
             }
           },
-          fixed: {
-            x: true,
-            y: true
-          }
+          fixed: true
         }
       )
       allHideRef.current = [nodes[0].id]
@@ -146,6 +139,7 @@ function App() {
   }
 
   const handleHideClick = nodeId => () => {
+    if(!nodeId) return
     const descendants = fp.compose(
       fp.map(node => node.id),
       fp.get('nodes'),

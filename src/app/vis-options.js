@@ -1,6 +1,7 @@
 export default {
+  height: '100%',
+  width: '100%',
   autoResize: true,
-  height: '90%',
   interaction: {
     hover: true,
     hoverConnectedEdges: true
@@ -47,7 +48,7 @@ export default {
       highlight: '#ff0000'
     }
   },
-   physics: {
+  physics: {
     enabled: true,
     repulsion: {
       centralGravity: .2,
