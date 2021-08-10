@@ -8,7 +8,13 @@ import { csvExport, iterateAll, dumpEdge, styles } from '../Helpers'
 import './style.scss'
 import 'rc-tree/assets/index.css'
 
+import {AgGridColumn, AgGridReact} from 'ag-grid-react'
+import 'ag-grid-enterprise'
+import 'ag-grid-community/dist/styles/ag-grid.css'
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css'
+
 export default props => {
+
   const { nodes, edges, events, popups, visOptions, className, options, allHideRef, handleShowNode } = props
   
   const [hiddenGroups, setHiddenGroups] = useState([])
@@ -119,6 +125,23 @@ export default props => {
 
     return [root]
   }, [manipulatedNodes, icons, edges])
+
+  const getAgGridTreeData = useCallback(() => {
+    const [root] = treeData()
+    const result = []
+
+    const iterateChildren = parent => {
+      result.push(parent)
+      parent.children.forEach(child => {
+        child.title = parent.title.concat([child.title])
+        iterateChildren(child)
+      })
+    }
+
+    root.title = [root.title]
+    iterateChildren(root)
+    return result
+  }, [treeData])
 
   const expandedTreeKeys = useCallback(
     () => !search ? [] : manipulatedNodes
@@ -231,6 +254,16 @@ export default props => {
     props.getNetwork && props.getNetwork(network)
   }
 
+  const [gridApi, setGridApi] = useState(null);
+  const [gridColumnApi, setGridColumnApi] = useState(null);
+
+  const onGridReady = (params) => {
+    setGridApi(params.api);
+    setGridColumnApi(params.columnApi);
+  };
+
+  const aGgridRowData = getAgGridTreeData()
+
   return (
     <div className={cn('Graph', className)}>
       {options.toolbar && (
@@ -264,13 +297,34 @@ export default props => {
           style={{ visibility: view ? 'visible' : 'hidden' }}
         />
         {!view && (
-          <Tree
-            className='Graph__Tree'
-            treeData={treeData()}
-            defaultExpandedKeys={expandedTreeKeys()}
-            filterTreeNode={filterTreeNode}
-            key={search}
-          />
+          // <Tree
+          //   className='Graph__Tree'
+          //   treeData={treeData()}
+          //   defaultExpandedKeys={expandedTreeKeys()}
+          //   filterTreeNode={filterTreeNode}
+          //   key={search}
+          // />
+          <div className="ag-theme-alpine" style={{ height: '100%', width: '100%' }}>
+            <AgGridReact
+              rowData={aGgridRowData}
+              defaultColDef={{ flex: 1 }}
+              autoGroupColumnDef={{
+                headerName: 'Title',
+                minWidth: 300,
+                cellRendererParams: { suppressCount: true },
+              }}
+              treeData={true}
+              animateRows={true}
+              groupDefaultExpanded={-1}
+              getDataPath={function (data) {
+                return data.title;
+              }}
+              onGridReady={onGridReady}
+            >
+              <AgGridColumn field="group" />
+              {/* <AgGridColumn field="employmentType" /> */}
+            </AgGridReact>
+          </div>
         )}
       </div>
       <div className='Graph__BasicInfo'>
