@@ -315,7 +315,6 @@ export default props => {
               }}
               treeData={true}
               animateRows={true}
-              groupDefaultExpanded={-1}
               getDataPath={function (data) {
                 return data.title;
               }}
